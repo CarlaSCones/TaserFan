@@ -1,6 +1,8 @@
 package com.example.taserfan;
 
-public class Empleado {
+import java.io.Serializable;
+
+public class Empleado implements Serializable {
     private String nombre;
     private String apellidos;
     private String dni;

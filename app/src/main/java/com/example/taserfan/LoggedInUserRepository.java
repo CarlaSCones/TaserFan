@@ -1,5 +1,7 @@
 package com.example.taserfan;
 
+import com.example.taserfan.Empleado;
+
 public class LoggedInUserRepository {
 
     private static LoggedInUserRepository loggedUserRepository;

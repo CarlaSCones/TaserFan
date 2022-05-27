@@ -1,6 +1,8 @@
 package com.example.taserfan;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,9 +11,12 @@ import android.widget.Toast;
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
 import com.example.taserfan.API.Result;
-import com.example.taserfan.base.AuthenticatonData;
+import com.example.taserfan.Empleado;
+import com.example.taserfan.LoggedInUserRepository;
+import com.example.taserfan.R;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
+import com.example.taserfan.base.Inicio;
 
 public class LoginActivity extends BaseActivity implements CallInterface, View.OnClickListener {
 
@@ -19,6 +24,7 @@ public class LoginActivity extends BaseActivity implements CallInterface, View.O
     EditText pssword;
     Button button;
     Result<Empleado> result;
+    Empleado empleado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,47 +39,42 @@ public class LoginActivity extends BaseActivity implements CallInterface, View.O
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        executeCall(this);
-    }
-
-    @Override
     public void doInBackground() {
-        result = Connector.getConector().post(Empleado.class, new AuthenticatonData("pepa@mordo.es", "1111"), API.Routes.AUTHENTICATE);
+
+        String tEmail = email.getText().toString().trim();
+        String tPassword = pssword.getText().toString().trim();
+
+        //Llamar a la query:
+        result = Connector.getConector().post(Empleado.class, new com.example.taserfan.API.AuthenticatonData(tEmail, tPassword), API.Routes.AUTHENTICATE);
+
     }
 
     @Override
     public void doInUI() {
-        Toast.makeText(this,"", Toast.LENGTH_SHORT).show();
         if(result instanceof Result.Success){
             LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>) result).getData());
-            Result.Success<Empleado> resultado = (Result.Success<Empleado>) result;
-            Toast.makeText(this, resultado.getData().getNombre(), Toast.LENGTH_SHORT).show();
 
-        }else if(result instanceof Result.Error){
-            Toast.makeText(this, "No se ha podido logear", Toast.LENGTH_SHORT).show();
+            //Mostrar datos:
+            Result.Success<Empleado> resultado = (Result.Success<Empleado>) result;
+            String nombre =resultado.getData().getNombre();
+            String apellido =resultado.getData().getApellidos();
+            String dni =resultado.getData().getDni();
+            Toast.makeText(this, "N: " + nombre + ", A: " +apellido + " D: "+ dni, Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(getApplicationContext(), Inicio.class);
+            intent.putExtra("usuario" , empleado);
+            startActivity(intent);
+
+        } else if(result instanceof Result.Error){
+            LoggedInUserRepository.getInstance().logout();
+            Toast.makeText(this, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-
-        if(id == R.id.login){
-            String tEmail = email.getText().toString().trim();
-            String tPassword = pssword.getText().toString().trim();
-
-           /* result = Connector.getConector().post(Empleado.class, new AuthenticatonData(tEmail, tPassword), "/authenticate");
-            if(result instanceof Result.Success){
-                LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>) result).getData());
-                Result.Success<Empleado> resultado = (Result.Success<Empleado>) result;
-                Toast.makeText(this, resultado.getData().getNombre(), Toast.LENGTH_SHORT).show();
-
-            } else if(result instanceof Result.Error){
-                LoggedInUserRepository.getInstance().logout();
-                Toast.makeText(this, "No se ha podido logear", Toast.LENGTH_SHORT).show();
-            }*/
-        }
+        if(id == R.id.login)
+            executeCall(this);
     }
 }
