@@ -11,18 +11,25 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
+import com.example.taserfan.API.Result;
+import com.example.taserfan.Coche;
 import com.example.taserfan.Empleado;
 import com.example.taserfan.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Inicio extends BaseActivity implements CallInterface, View.OnClickListener {
 
+    private static final String TAG = Inicio.class.getName();
+    Result<Empleado> result;
     private RecyclerView recyclerView;
     private List<List> datos;
     private Empleado empleado;
+    private Coche coche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +41,7 @@ public class Inicio extends BaseActivity implements CallInterface, View.OnClickL
             empleado = (Empleado) getIntent().getExtras().getSerializable("usuario");
 
             datos = new ArrayList<>();
-            recyclerView = findViewById(R.id.recycler);
+            recyclerView = findViewById(R.id.recyclerVehiculos);
             TextView usuario = findViewById(R.id.usuario);
 
             usuario.setText(empleado.getNombre());
@@ -68,24 +75,24 @@ public class Inicio extends BaseActivity implements CallInterface, View.OnClickL
     @Override
     public void doInBackground() {
         //Ejecutar la llamanada a la bd
-        String url = "forecast?lang=es&units=metric&lat="+ empleado.getLat() + "&lon="+ empleado.getLon() +"&appid="+ API;
+        String url = API.Routes.COCHES;
         Log.d(TAG, url);
-        root = Connector.getConector().get(Root.class,url);
+        result = Connector.getConector().get(Coche.class,url);
     }
 
     @Override
     public void doInUI() {
         hideProgress();
-        datos.addAll(root.list);
+        datos.addAll((Collection<? extends List>) result);
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) {/*
         int position = recyclerView.getChildAdapterPosition(view);
         Intent intent = new Intent(this, DetallesDia.class);
         intent.putExtra("root",root);
         intent.putExtra("position",position);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }
-}
+

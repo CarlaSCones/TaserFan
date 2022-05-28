@@ -1,4 +1,4 @@
-package com.example.taserfan.API;
+package com.example.taserfan.base;
 
 public class AuthenticatonData {
     private String email;

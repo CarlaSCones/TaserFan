@@ -1,6 +1,7 @@
 package com.example.taserfan.API;
 
 
+import com.example.taserfan.Coche;
 import com.example.taserfan.Empleado;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Connector {
 //        return null;
 //    }
 
-    public <T> Result<T> get(Class<T> clazz, String path) {
+    public <T> Result<T> get(Class<Coche> clazz, String path) {
         try {
             String url = API.Routes.URL + path;
             Response<ResponseBody> jsonResponse = callMethodsObject.getResult(url);
@@ -59,7 +60,7 @@ public class Connector {
         return null;
     }
 
-    public <T> Result<T> post(Class<Empleado> clazz, com.example.taserfan.API.AuthenticatonData data, String path) {
+    public <T> Result<T> post(Class<Empleado> clazz, com.example.taserfan.base.AuthenticatonData data, String path) {
         try {
             String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);
@@ -110,7 +111,7 @@ public class Connector {
         return null;
     }
 
-    public <T> Result<T> authenticate(Class<T> clazz, com.example.taserfan.API.AuthenticatonData data, String path) {
+    public <T> Result<T> authenticate(Class<T> clazz, com.example.taserfan.base.AuthenticatonData data, String path) {
         try {
             String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);
@@ -127,4 +128,5 @@ public class Connector {
         }
         return null;
     }
+
 }
