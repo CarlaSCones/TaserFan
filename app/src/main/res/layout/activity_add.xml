@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityAdd">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Rellene los datos para añadir un nuevo vehiculo"
+        android:textColor="#100F0F"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextMatricula"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Matricula"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/editTextPrecioH"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Precio / Hora"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMatricula" />
+
+    <EditText
+        android:id="@+id/editTextMarca"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Marca"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPrecioH"
+        app:layout_constraintStart_toStartOf="@+id/editTextPrecioH"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPrecioH" />
+
+    <EditText
+        android:id="@+id/editTextColor"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Color"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMarca"
+        app:layout_constraintStart_toStartOf="@+id/editTextMarca"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMarca" />
+
+    <EditText
+        android:id="@+id/editTextBateria"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Bateria"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextColor"
+        app:layout_constraintStart_toStartOf="@+id/editTextColor"
+        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+
+    <EditText
+        android:id="@+id/editTextEstado"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Estado"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextBateria"
+        app:layout_constraintStart_toStartOf="@+id/editTextBateria"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBateria" />
+
+    <EditText
+        android:id="@+id/editTextId"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="ID del carnet"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEstado"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEstado" />
+
+    <EditText
+        android:id="@+id/editTextTipo"
+        android:layout_width="349dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Tipo de vehiculo"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/editTextId"
+        app:layout_constraintStart_toStartOf="@+id/editTextId"
+        app:layout_constraintTop_toBottomOf="@+id/editTextId" />
+
+    <Button
+        android:id="@+id/buttonAnyadir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="#B9B7EC"
+        android:text="AÑADIR"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTipo"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/editTextTipo"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTipo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

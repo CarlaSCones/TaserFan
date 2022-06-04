@@ -1,8 +1,8 @@
 package com.example.taserfan.API;
 
 
-import com.example.taserfan.Coche;
-import com.example.taserfan.Empleado;
+import com.example.taserfan.Clases.AuthenticatonData;
+import com.example.taserfan.Clases.Empleado;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,8 +29,7 @@ public class Connector {
     }
 
     public <T> List<T> getAsList(Class<T> clazz, String path) {
-        String url = API.Routes.URL + path;
-        String jsonResponse = callMethodsObject.get(url);
+        String jsonResponse = callMethodsObject.get(path);
         if (jsonResponse != null)
             return conversor.fromJsonList(jsonResponse, clazz);
         return null;
@@ -45,22 +44,32 @@ public class Connector {
 //        return null;
 //    }
 
-    public <T> Result<T> get(Class<Coche> clazz, String path) {
+    public <T> T get(Class<T> clazz, String path) {
+
+        String jsonResponse = callMethodsObject.get(path);
+        if (jsonResponse != null)
+            return conversor.fromJson(jsonResponse, clazz);
+        return null;
+    }
+
+    public <T> Result<T> getResult(Class<T> clazz, String path) {
+
         try {
             String url = API.Routes.URL + path;
             Response<ResponseBody> jsonResponse = callMethodsObject.getResult(url);
+
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
             else if (jsonResponse != null)
-
                 return conversor.getError(jsonResponse.errorBody().string());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public <T> Result<T> post(Class<Empleado> clazz, com.example.taserfan.base.AuthenticatonData data, String path) {
+    public <T> Result<T> postAuth(Class<Empleado> clazz, AuthenticatonData data, String path) {
         try {
             String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);
@@ -78,12 +87,30 @@ public class Connector {
         return null;
     }
 
-    public <T> Result<T> put(Class<T> clazz, T data, String path) {
+    public <T> Result<T> post(Class<T> clazz, T data, String path) {
         try {
             String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-            Response<ResponseBody> jsonResponse = callMethodsObject.putResult(url, body);
+            Response<ResponseBody> jsonResponse = callMethodsObject.postResult(url, body);
+
+            if (jsonResponse != null && jsonResponse.code() == 200)
+                return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
+            else if (jsonResponse != null)
+                return conversor.getError(jsonResponse.errorBody().string());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public <T> Result<T> put(Class<T> clazz, T data, String path) {
+        try {
+            String jsonObject = conversor.toJson(data);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+            Response<ResponseBody> jsonResponse = callMethodsObject.putResult(path, body);
 
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
@@ -111,7 +138,7 @@ public class Connector {
         return null;
     }
 
-    public <T> Result<T> authenticate(Class<T> clazz, com.example.taserfan.base.AuthenticatonData data, String path) {
+    public <T> Result<T> authenticate(Class<T> clazz, AuthenticatonData data, String path) {
         try {
             String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);

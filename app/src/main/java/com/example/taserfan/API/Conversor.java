@@ -14,7 +14,6 @@ public class Conversor {
     public  static Conversor getConversor() {
         if (conversor==null) {
             gson = new Gson();
-            //gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
             conversor=new Conversor();
         }
         return conversor;

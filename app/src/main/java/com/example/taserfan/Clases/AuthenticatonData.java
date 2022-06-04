@@ -1,12 +1,12 @@
-package com.example.taserfan.base;
+package com.example.taserfan.Clases;
 
 public class AuthenticatonData {
     private String email;
-    private String passwd;
+    private String password;
 
     public AuthenticatonData(String email, String password) {
         this.email = email;
-        this.passwd = password;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -18,10 +18,10 @@ public class AuthenticatonData {
     }
 
     public String getPassword() {
-        return passwd;
+        return password;
     }
 
     public void setPassword(String password) {
-        this.passwd = password;
+        this.password = password;
     }
 }

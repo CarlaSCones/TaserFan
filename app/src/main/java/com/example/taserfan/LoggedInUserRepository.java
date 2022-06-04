@@ -1,6 +1,6 @@
 package com.example.taserfan;
 
-import com.example.taserfan.Empleado;
+import com.example.taserfan.Clases.Empleado;
 
 public class LoggedInUserRepository {
 

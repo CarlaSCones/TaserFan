@@ -32,6 +32,7 @@ public class CallMethods<T>  {
         }
         return null;
     }
+
     public Response<ResponseBody> getResult(String url){
         Call<ResponseBody> call = service.getCall(url);
         try {

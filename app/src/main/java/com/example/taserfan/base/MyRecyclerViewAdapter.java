@@ -1,7 +1,7 @@
 package com.example.taserfan.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,26 +9,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taserfan.API.API;
-import com.example.taserfan.API.Connector;
-import com.example.taserfan.API.Result;
-import com.example.taserfan.Coche;
-import com.example.taserfan.Empleado;
+import com.example.taserfan.Clases.TipoVehiculo;
 import com.example.taserfan.R;
+import com.example.taserfan.Clases.Vehiculo;
+
 import java.util.List;
-import java.util.Locale;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private final List<List> list;
-    private final LayoutInflater inflater;
+    private List<Vehiculo> list;
+    private LayoutInflater inflater;
     private View.OnClickListener onClickListener;
     private Context context;
-    Result<Coche> result;
 
-    public MyRecyclerViewAdapter(Context context, List<List> list){
+    public MyRecyclerViewAdapter(Context context, List<Vehiculo> list){
         this.list = list;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
@@ -44,18 +41,50 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Vehiculo v = list.get(position);
+        TipoVehiculo t= v.getTipoVehiculo();
+        String c = String.valueOf(v.getColor());
+        holder.matricula.setText(v.getMatricula());
+        holder.marca.setText(v.getMarca());
+        holder.precio.setText(v.getPreciohora() + " ");
 
-        //Llamar a la query:
-        result = Connector.getConector().get(Coche.class, API.Routes.COCHES);
+        switch (t){
+            case COCHE:
+                holder.imagen.setImageResource(R.mipmap.coche_launcher_foreground);
+                break;
+            case MOTO:
+                holder.imagen.setImageResource(R.mipmap.moto_launcher_foreground);
+                break;
+            case BICICLETA:
+                holder.imagen.setImageResource(R.mipmap.bicicleta_launcher_foreground);
+                break;
+            case PATINETE:
+                holder.imagen.setImageResource(R.mipmap.patinete_launcher_foreground);
+                break;
+        }
 
-        //Mostrar resultados
-        Result.Success<Coche> resultado = (Result.Success<Coche>) result;
+        switch (c){
+            case "rojo":
+                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.rojo));
+                break;
+            case "amarillo":
+                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.amarillo));
+                break;
+            case "verde":
+                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.verde));
+                break;
+                case "azul":
+                    holder.imagen.setColorFilter(ContextCompat.getColor(context, R.color.azul));
+                break;
+            case "negro":
+                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.negro));
+                break;
+            case "blanco":
+                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.blanco));
+                break;
 
-        holder.vehiculo.setText("Coche");
-        holder.matriucla.setText(resultado.getData().getMatricula());
-        holder.datoA.setText(String.valueOf(resultado.getData().getNumPlazas()));
-        holder.datoB.setText(String.valueOf(resultado.getData().getNumPuertas()));
 
+        }
     }
 
     @Override
@@ -67,21 +96,29 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         this.onClickListener = onClickListener;
     }
 
+    public void setListener(View.OnClickListener listener){
+        this.onClickListener=listener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setNewData(List<Vehiculo> vehiculo) {
+        this.list =vehiculo;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imagen;
-        EditText vehiculo;
-        EditText matriucla;
-        EditText datoA;
-        EditText datoB;
+        EditText matricula;
+        EditText marca;
+        EditText precio;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imagen = itemView.findViewById(R.id.icono);
-            vehiculo = itemView.findViewById(R.id.tipoVvehiculo);
-            matriucla = itemView.findViewById(R.id.textMatricula);
-            datoA = itemView.findViewById(R.id.dato1);
-            datoB = itemView.findViewById(R.id.dato2);
+            matricula = itemView.findViewById(R.id.matricula);
+            marca = itemView.findViewById(R.id.textMarca);
+            precio = itemView.findViewById(R.id.textPrecio);
         }
 
     }

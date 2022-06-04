@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Servidor">
+
+        <EditTextPreference
+            android:defaultValue="192.168.0.15"
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="IP del servidor" />
+        <EditTextPreference
+            android:defaultValue="4567"
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Puerto del servidor" />
+        <PreferenceCategory android:title="Tema de la aplicacion">
+
+            <ListPreference
+                android:entries="@array/settings_theme_entries"
+                android:entryValues="@array/settings_theme_entries"
+                android:key="@string/settings_theme_key"
+                android:title="@string/settings_theme_title" />
+        </PreferenceCategory>
+    </PreferenceCategory>
+</PreferenceScreen>

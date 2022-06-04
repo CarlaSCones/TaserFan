@@ -10,10 +10,8 @@
         android:id="@+id/icono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#B9B7EC"
-        android:backgroundTint="#B9B7EC"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:circularflow_defaultRadius="100dp"
         app:circularflow_radiusInDP="100dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,10 +30,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textMatricula"
+        android:id="@+id/matricula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Matricula:"
         android:textColor="#090909"
         android:textStyle="bold"
@@ -51,42 +49,54 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textColor="#0B0A0A"
-        app:layout_constraintBottom_toBottomOf="@+id/textMatricula"
-        app:layout_constraintStart_toEndOf="@+id/textMatricula"
-        app:layout_constraintTop_toTopOf="@+id/textMatricula" />
+        app:layout_constraintBottom_toBottomOf="@+id/matricula"
+        app:layout_constraintStart_toEndOf="@+id/matricula"
+        app:layout_constraintTop_toTopOf="@+id/matricula" />
 
     <TextView
-        android:id="@+id/dato1"
+        android:id="@+id/textMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="TextView"
         android:textColor="#0B0A0A"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewD"
-        app:layout_constraintStart_toEndOf="@+id/textViewD"
-        app:layout_constraintTop_toTopOf="@+id/textViewD" />
+        app:layout_constraintBottom_toBottomOf="@+id/marca"
+        app:layout_constraintStart_toEndOf="@+id/marca"
+        app:layout_constraintTop_toTopOf="@+id/marca" />
 
     <TextView
-        android:id="@+id/dato2"
+        android:id="@+id/precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Precio : "
+        android:textColor="#0B0B0B"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/marca"
+        app:layout_constraintStart_toStartOf="@+id/marca"
+        app:layout_constraintTop_toBottomOf="@+id/marca" />
+
+    <TextView
+        android:id="@+id/marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Marca :"
+        android:textColor="#0E0E0E"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/matricula"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/matricula"
+        app:layout_constraintTop_toBottomOf="@+id/matricula" />
+
+    <TextView
+        android:id="@+id/textPrecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="TextView"
-        android:textColor="#0B0B0B"
-        app:layout_constraintBottom_toBottomOf="@+id/dato1"
-        app:layout_constraintStart_toEndOf="@+id/dato1"
-        app:layout_constraintTop_toTopOf="@+id/dato1" />
-
-    <TextView
-        android:id="@+id/textViewD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Detalles:"
-        android:textColor="#0E0E0E"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textMatricula"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textMatricula"
-        app:layout_constraintTop_toBottomOf="@+id/textMatricula" />
+        android:textColor="#0C0C0C"
+        app:layout_constraintBottom_toBottomOf="@+id/precio"
+        app:layout_constraintStart_toEndOf="@+id/precio"
+        app:layout_constraintTop_toTopOf="@+id/precio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
