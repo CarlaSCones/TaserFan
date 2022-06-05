@@ -13,4 +13,5 @@
     <string name="default_string">System default</string>
     <string name="light">Ligth</string>
     <string name="dark">Dark</string>
+
 </resources>

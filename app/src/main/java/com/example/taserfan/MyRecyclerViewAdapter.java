@@ -1,4 +1,4 @@
-package com.example.taserfan.base;
+package com.example.taserfan;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taserfan.Clases.TipoVehiculo;
-import com.example.taserfan.R;
 import com.example.taserfan.Clases.Vehiculo;
 
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.List;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private List<Vehiculo> list;
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
     private View.OnClickListener onClickListener;
-    private Context context;
+    private final Context context;
 
     public MyRecyclerViewAdapter(Context context, List<Vehiculo> list){
         this.list = list;

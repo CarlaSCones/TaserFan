@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="Servidor">
 
         <EditTextPreference
-            android:defaultValue="192.168.0.15"
-            android:key="edit_text_preference_1"
+            android:key="ip"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="IP del servidor" />
+            android:title="IP del servidor"
+            app:defaultValue="@string/ip" />
         <EditTextPreference
             android:defaultValue="4567"
-            android:key="edit_text_preference_1"
+            android:key="puerto"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Puerto del servidor" />
+            android:title="Puerto del servidor"
+            app:defaultValue="@string/puerto" />
         <PreferenceCategory android:title="Tema de la aplicacion">
 
             <ListPreference
                 android:entries="@array/settings_theme_entries"
-                android:entryValues="@array/settings_theme_entries"
+                android:entryValues="@array/settings_theme_values"
                 android:key="@string/settings_theme_key"
                 android:title="@string/settings_theme_title" />
         </PreferenceCategory>

@@ -35,15 +35,6 @@ public class Connector {
         return null;
     }
 
-
-//    public <T> T get(Class<T> clazz, String path) {
-//        String url = API.Routes.URL + path;
-//        String jsonResponse = callMethodsObject.get(url);
-//        if (jsonResponse != null)
-//            return conversor.fromJson(jsonResponse, clazz);
-//        return null;
-//    }
-
     public <T> T get(Class<T> clazz, String path) {
 
         String jsonResponse = callMethodsObject.get(path);

@@ -16,7 +16,9 @@ import com.example.taserfan.API.Connector;
 import com.example.taserfan.API.Result;
 import com.example.taserfan.Clases.AuthenticatonData;
 import com.example.taserfan.Clases.Empleado;
+import com.example.taserfan.Preferencias.GestionPreferencias;
 import com.example.taserfan.Preferencias.PreferenciasActivity;
+import com.example.taserfan.Preferencias.ThemeSetup;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
 
@@ -27,7 +29,6 @@ public class LoginActivity extends BaseActivity implements CallInterface, View.O
     EditText password;
     Button buttonLogin;
     Result result;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,12 @@ public class LoginActivity extends BaseActivity implements CallInterface, View.O
         imageView.setImageResource(R.mipmap.usuario_launcher_foreground);
         buttonLogin =findViewById(R.id.login);
         buttonLogin.setOnClickListener(this);
+
+        ThemeSetup.applyPreferenceTheme(getApplicationContext());
+
+        GestionPreferencias.getInstance().getTheme(getApplicationContext());
+        GestionPreferencias.getInstance().getIp(getApplicationContext());
+        GestionPreferencias.getInstance().getPuerto(getApplicationContext());
     }
 
     @Override

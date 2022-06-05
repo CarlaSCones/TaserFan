@@ -25,19 +25,19 @@ public class PreferenciasFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-        final EditTextPreference ip = getPreferenceManager().findPreference("ip");
-        ip.setSummary("IP actual: " + GestionPreferencias.getInstance().getIp(getContext()));
-        ip.setOnPreferenceChangeListener((preference, newValue) -> {
-            ip.setSummary("IP actual: " + newValue);
+        final EditTextPreference editTextPreference = findPreference("ip");
+        editTextPreference.setSummary("Actualmente: " + GestionPreferencias.getInstance().getIp(getContext()));
+        editTextPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            editTextPreference.setSummary("Actualmente: " + newValue);
             return true;
         });
 
-        // puerto
-        final EditTextPreference url = findPreference("puerto");
-        url.setSummary("Puerto actual: " + GestionPreferencias.getInstance().getPuerto(getContext()));
-        url.setOnPreferenceChangeListener((preference, newValue) -> {
-            url.setSummary("Puerto actual: " + newValue);
+        final EditTextPreference editTextPreference2 = findPreference("puerto");
+        editTextPreference2.setSummary("Actualmente: " + GestionPreferencias.getInstance().getPuerto(getContext()));
+        editTextPreference2.setOnPreferenceChangeListener((preference, newValue) -> {
+            editTextPreference2.setSummary("Actualmente: " + newValue);
             return true;
         });
+
     }
 }
