@@ -5,19 +5,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taserfan.Clases.Estado;
 import com.example.taserfan.Clases.TipoVehiculo;
 import com.example.taserfan.Clases.Vehiculo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> implements Serializable {
 
     private List<Vehiculo> list;
     private final LayoutInflater inflater;
@@ -42,10 +44,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Vehiculo v = list.get(position);
         TipoVehiculo t= v.getTipoVehiculo();
-        String c = String.valueOf(v.getColor());
+        Estado e = v.getEstado();
+        //String c = String.valueOf(v.getColor());
         holder.matricula.setText(v.getMatricula());
-        holder.marca.setText(v.getMarca());
-        holder.precio.setText(v.getPreciohora() + " ");
+        holder.descripcion.setText(v.getDescripcion());
+        holder.color.setText(v.getColor() + " ");
 
         switch (t){
             case COCHE:
@@ -62,27 +65,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 break;
         }
 
-        switch (c){
-            case "rojo":
-                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.rojo));
+        switch (e){
+            case TALLER:
+                holder.imagenEstado.setColorFilter(ContextCompat.getColor(context,R.color.rojo));
                 break;
-            case "amarillo":
-                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.amarillo));
+            case BAJA:
+                holder.imagenEstado.setColorFilter(ContextCompat.getColor(context,R.color.amarillo));
                 break;
-            case "verde":
-                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.verde));
+            case PREPARADO:
+                holder.imagenEstado.setColorFilter(ContextCompat.getColor(context,R.color.verde));
                 break;
-                case "azul":
-                    holder.imagen.setColorFilter(ContextCompat.getColor(context, R.color.azul));
+            case RESERVADO:
+                    holder.imagenEstado.setColorFilter(ContextCompat.getColor(context, R.color.azul));
                 break;
-            case "negro":
-                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.negro));
+            case ALQUILADO:
+                holder.imagenEstado.setColorFilter(ContextCompat.getColor(context,R.color.morado));
                 break;
-            case "blanco":
-                holder.imagen.setColorFilter(ContextCompat.getColor(context,R.color.blanco));
-                break;
-
-
         }
     }
 
@@ -108,16 +106,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imagen;
-        EditText matricula;
-        EditText marca;
-        EditText precio;
+        ImageView imagenEstado;
+        TextView matricula;
+        TextView descripcion;
+        TextView color;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imagen = itemView.findViewById(R.id.icono);
+            imagenEstado = itemView.findViewById(R.id.imagenEstado);
             matricula = itemView.findViewById(R.id.matricula);
-            marca = itemView.findViewById(R.id.textMarca);
-            precio = itemView.findViewById(R.id.textPrecio);
+            descripcion = itemView.findViewById(R.id.descripcion);
+            color = itemView.findViewById(R.id.color);
         }
 
     }

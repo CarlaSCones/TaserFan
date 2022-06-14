@@ -10,7 +10,7 @@
         android:id="@+id/icono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:circularflow_defaultRadius="100dp"
         app:circularflow_radiusInDP="100dp"
@@ -19,84 +19,69 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/tipoVvehiculo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="#050505"
-        app:layout_constraintStart_toEndOf="@+id/icono"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/matricula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Matricula:"
-        android:textColor="#090909"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tipoVvehiculo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tipoVvehiculo"
-        app:layout_constraintTop_toBottomOf="@+id/tipoVvehiculo" />
-
-    <TextView
-        android:id="@+id/numMatricula"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="TextView"
-        android:textColor="#0B0A0A"
-        app:layout_constraintBottom_toBottomOf="@+id/matricula"
-        app:layout_constraintStart_toEndOf="@+id/matricula"
-        app:layout_constraintTop_toTopOf="@+id/matricula" />
+        android:textColor="#050505"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/icono"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textMarca"
+        android:id="@+id/descripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="TextView"
         android:textColor="#0B0A0A"
-        app:layout_constraintBottom_toBottomOf="@+id/marca"
-        app:layout_constraintStart_toEndOf="@+id/marca"
-        app:layout_constraintTop_toTopOf="@+id/marca" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/precio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Precio : "
-        android:textColor="#0B0B0B"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/marca"
-        app:layout_constraintStart_toStartOf="@+id/marca"
-        app:layout_constraintTop_toBottomOf="@+id/marca" />
-
-    <TextView
-        android:id="@+id/marca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Marca :"
-        android:textColor="#0E0E0E"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/matricula"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/matricula"
-        app:layout_constraintTop_toBottomOf="@+id/matricula" />
-
-    <TextView
-        android:id="@+id/textPrecio"
+        android:id="@+id/color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="TextView"
         android:textColor="#0C0C0C"
-        app:layout_constraintBottom_toBottomOf="@+id/precio"
-        app:layout_constraintStart_toEndOf="@+id/precio"
-        app:layout_constraintTop_toTopOf="@+id/precio" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Descripcion : "
+        android:textColor="#050505"
+        app:layout_constraintEnd_toEndOf="@+id/matricula"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="@+id/matricula"
+        app:layout_constraintTop_toBottomOf="@+id/matricula" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Color : "
+        android:textColor="#050505"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <ImageView
+        android:id="@+id/imagenEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/matricula"
+        app:layout_constraintStart_toEndOf="@+id/matricula"
+        app:layout_constraintTop_toTopOf="@+id/matricula"
+        app:srcCompat="@drawable/ic_baseline_local_offer_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

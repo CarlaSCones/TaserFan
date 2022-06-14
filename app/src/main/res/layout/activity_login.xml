@@ -12,6 +12,7 @@
         android:layout_marginTop="28dp"
         android:backgroundTint="#B9B7EC"
         android:text="ENTRAR"
+        app:cornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="@+id/password"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="@+id/password"

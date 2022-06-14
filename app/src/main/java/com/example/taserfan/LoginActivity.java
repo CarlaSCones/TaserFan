@@ -76,9 +76,7 @@ public class LoginActivity extends BaseActivity implements CallInterface, View.O
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
-        if(id == R.id.login)
-            executeCall(this);
+        executeCall(this);
     }
 
     @Override

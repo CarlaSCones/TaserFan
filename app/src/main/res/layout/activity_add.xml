@@ -120,6 +120,7 @@
         android:layout_marginTop="44dp"
         android:backgroundTint="#B9B7EC"
         android:text="AÑADIR"
+        app:cornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTipo"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/editTextTipo"

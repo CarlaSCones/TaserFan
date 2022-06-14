@@ -21,14 +21,19 @@ import com.example.taserfan.Preferencias.ThemeSetup;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
 
-public class ActivityAdd extends BaseActivity implements CallInterface {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ActivityAdd extends BaseActivity implements CallInterface, Serializable {
 
     EditText matri, marc,precio, bateria, idCarnet,color,estado;
+    List<Vehiculo> aux;
     Vehiculo v;
     TipoVehiculo tipoVehiculo;
     Button anyadir;
     Result result;
-    private final String url = "http://" +GestionPreferencias.getInstance().getIp(this)+":"+ GestionPreferencias.getInstance().getPuerto(this);
+    private final String url = API.Routes.URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,25 +59,23 @@ public class ActivityAdd extends BaseActivity implements CallInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        showProgress();
         executeCall(this);
     }
 
     @Override
     public void doInBackground() {
-       v = Connector.getConector().get(Vehiculo.class, url + API.Routes.VEHICULOS);
+        aux = new ArrayList<>(Connector.getConector().getAsList(Vehiculo.class, API.Routes.VEHICULOS));
     }
 
     @Override
     public void doInUI() {
-        hideProgress();
         matri.setText("" + v.getMatricula());
-        precio.setText("" + v.getMarca());
+       /* precio.setText("" + v.getMarca());
         color.setText("" + v.getPreciohora());
         marc.setText("" + v.getColor());
         bateria.setText("" + v.getBateria());
         estado.setText("" + v.getEstado());
-        idCarnet.setText("" + v.getIdCarnet());
+        idCarnet.setText("" + v.getIdCarnet());*/
 
         anyadir.setOnClickListener(view -> {
 
@@ -131,7 +134,7 @@ public class ActivityAdd extends BaseActivity implements CallInterface {
                             @Override
                             public void doInBackground() {
                                 TipoVehiculo tv=TipoVehiculo.MOTO;
-                                v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
+                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
                                 result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
                             }
 
@@ -161,7 +164,7 @@ public class ActivityAdd extends BaseActivity implements CallInterface {
                             @Override
                             public void doInBackground() {
                                 TipoVehiculo tv =TipoVehiculo.COCHE;
-                                v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
+                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
                                 result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
                             }
 
@@ -191,7 +194,7 @@ public class ActivityAdd extends BaseActivity implements CallInterface {
                             @Override
                             public void doInBackground() {
                                 TipoVehiculo tv=TipoVehiculo.BICICLETA;
-                                v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
+                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
                                 result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
                             }
 
@@ -221,7 +224,7 @@ public class ActivityAdd extends BaseActivity implements CallInterface {
                             @Override
                             public void doInBackground() {
                                 TipoVehiculo tv=TipoVehiculo.PATINETE;
-                                v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
+                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
                                 result= Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
                             }
 
