@@ -1,6 +1,5 @@
 package com.example.taserfan;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,14 +15,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
-import com.example.taserfan.API.Result;
 import com.example.taserfan.Clases.TipoVehiculo;
 import com.example.taserfan.Clases.Vehiculo;
 import com.example.taserfan.Preferencias.GestionPreferencias;
@@ -31,34 +28,24 @@ import com.example.taserfan.Preferencias.PreferenciasActivity;
 import com.example.taserfan.Preferencias.ThemeSetup;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends BaseActivity implements CallInterface, View.OnClickListener, Serializable{
+public class MainActivity extends BaseActivity implements CallInterface, View.OnClickListener{
 
     RecyclerView recycler;
     MyRecyclerViewAdapter myRecyclerViewAdapter;
     ItemTouchHelper itemTouchHelper;
-    List<Vehiculo> aux;
-    TipoVehiculo tipoVehiculo;
     Context context;
-    Button add;
-
     EditText filtrar;
     Spinner spinner;
-
+    Button add;
+    List<Vehiculo> aux;
     ArrayAdapter<String> adapter;
     String[] v = {"TODOS", "COCHE", "MOTO", "BICICLETA", "PATINETE"};
-
-   // List<String> vehiculos;
-    //Result result;
-    //View.OnClickListener click = this;
-    //private final String url = "http://" +GestionPreferencias.getInstance().getIp(this)+":"+ GestionPreferencias.getInstance().getPuerto(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +55,6 @@ public class MainActivity extends BaseActivity implements CallInterface, View.On
         recycler = findViewById(R.id.recyclerVehiculos);
         add = findViewById(R.id.addVehiculo);
         filtrar = findViewById(R.id.editTextFiltrar);
-
         spinner = findViewById(R.id.elegirVehiculos);
         context = this;
 
@@ -85,7 +71,7 @@ public class MainActivity extends BaseActivity implements CallInterface, View.On
     @Override
     public void doInBackground() {
 
-        aux = new ArrayList<>(Connector.getConector().getAsList(Vehiculo.class, API.Routes.VEHICULOS));
+        aux = new ArrayList<>(Connector.getConector().getList(Vehiculo.class, API.Routes.VEHICULOS));
     }
 
     @Override
@@ -121,7 +107,7 @@ public class MainActivity extends BaseActivity implements CallInterface, View.On
                 executeCall(new CallInterface() {
                     @Override
                     public void doInBackground() {
-                        Connector.getConector().delete(Vehiculo.class, (API.Routes.VEHICULO + "?matricula=" + v.getMatricula()));
+                        Connector.getConector().delete(Vehiculo.class, API.Routes.VEHICULO + "?matricula=" + v.getMatricula());
                     }
 
                     @Override
@@ -197,13 +183,13 @@ public class MainActivity extends BaseActivity implements CallInterface, View.On
                     recycler.setAdapter(myRecyclerViewAdapter);
                 }else{
                     if (!spinner.getSelectedItem().toString().equals("TODOS")) {
-                        List<Vehiculo> l = aux.stream().filter((v) -> v.getMatricula().contains(editable.toString()) && v.getTipoVehiculo().equals(spinner.getSelectedItem().toString())).collect(Collectors.toList());
-                        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context,l);
+                        List<Vehiculo> vehiculoList = aux.stream().filter((v) -> v.getMatricula().contains(editable.toString()) && v.getTipoVehiculo().equals(spinner.getSelectedItem().toString())).collect(Collectors.toList());
+                        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context,vehiculoList);
                         myRecyclerViewAdapter.setOnClickListener(MainActivity.this);
                         recycler.setAdapter(myRecyclerViewAdapter);
                     } else {
-                        List<Vehiculo> l = aux.stream().filter((v) -> v.getMatricula().contains(editable.toString())).collect(Collectors.toList());
-                        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context,l);
+                        List<Vehiculo> vehiculoList = aux.stream().filter((v) -> v.getMatricula().contains(editable.toString())).collect(Collectors.toList());
+                        myRecyclerViewAdapter = new MyRecyclerViewAdapter(context,vehiculoList);
                         myRecyclerViewAdapter.setOnClickListener(MainActivity.this);
                         recycler.setAdapter(myRecyclerViewAdapter);
                     }
@@ -214,32 +200,34 @@ public class MainActivity extends BaseActivity implements CallInterface, View.On
 
     @Override
     public void onClick(View view) {
-        Intent intent =new Intent(getApplicationContext(),Activity_detallado.class);
+        Intent intent =new Intent(MainActivity.this, Activity_detallado.class);
         int index = recycler.getChildAdapterPosition(view);
 
         intent.putExtra("index", index);
-        intent.putExtra("list", (Serializable) aux);
-       // intent.putExtra("matricula",aux.get(recycler.getChildAdapterPosition(view)).getMatricula());
+        intent.putExtra("lista", (Serializable) aux);
         startActivity(intent);
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("list", (Serializable) aux);
-        outState.putString("filtroMatricula", filtrar.getText().toString());
-        outState.putInt("posFiltroTipo", spinner.getSelectedItemPosition());
+
+        outState.putSerializable("lista", (Serializable) aux);
+        outState.putString("filtrarMat", filtrar.getText().toString());
+        outState.putInt("flitrarTipo", spinner.getSelectedItemPosition());
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        aux = (List<Vehiculo>) savedInstanceState.getSerializable("list");
-        filtrar.setText(savedInstanceState.getString("filtroMatricula"));
-        spinner.setSelection(savedInstanceState.getInt("posFiltroTipo"));
 
+        aux = (List<Vehiculo>) savedInstanceState.getSerializable("list");
         if (aux != null)
             doInUI();
+
+        filtrar.setText(savedInstanceState.getString("filtrarMat"));
+        spinner.setSelection(savedInstanceState.getInt("flitrarTipo"));
+
     }
 
     @Override

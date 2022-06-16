@@ -17,27 +17,14 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageVehiculo"
         app:layout_constraintVertical_bias="0.069" />
-
-    <EditText
-        android:id="@+id/textMat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:hint="Nº Matricula"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/mat"
-        app:layout_constraintStart_toEndOf="@+id/mat"
-        app:layout_constraintTop_toTopOf="@+id/mat"
-        app:layout_constraintVertical_bias="0.619" />
 
     <TextView
         android:id="@+id/ph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Precio/hora : "
         android:textColor="#101010"
         android:textSize="18sp"
@@ -51,7 +38,7 @@
         android:id="@+id/marc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Marca : "
         android:textColor="#101010"
         android:textSize="18sp"
@@ -65,7 +52,7 @@
         android:id="@+id/col"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Color : "
         android:textColor="#101010"
         android:textSize="18sp"
@@ -75,49 +62,38 @@
         app:layout_constraintTop_toBottomOf="@+id/marc" />
 
     <EditText
-        android:id="@+id/textPh"
+        android:id="@+id/editTextPrecioHora"
         android:layout_width="106dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:hint="€/H"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/ph"
         app:layout_constraintStart_toEndOf="@+id/ph"
         app:layout_constraintTop_toTopOf="@+id/ph"
         app:layout_constraintVertical_bias="0.619" />
 
     <EditText
-        android:id="@+id/textMarc"
+        android:id="@+id/editTextMarc"
         android:layout_width="106dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
         android:hint="Marca"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/marc"
         app:layout_constraintStart_toEndOf="@+id/marc"
         app:layout_constraintTop_toTopOf="@+id/marc"
         app:layout_constraintVertical_bias="0.666" />
 
-    <EditText
-        android:id="@+id/textCol"
-        android:layout_width="106dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:hint="Color"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/col"
-        app:layout_constraintStart_toEndOf="@+id/col"
-        app:layout_constraintTop_toTopOf="@+id/col"
-        app:layout_constraintVertical_bias="0.571" />
-
     <TextView
         android:id="@+id/bateria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Bateria :"
         android:textColor="#101010"
         android:textSize="18sp"
@@ -130,7 +106,7 @@
         android:id="@+id/estado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Estado :"
         android:textColor="#101010"
         android:textSize="18sp"
@@ -143,7 +119,7 @@
         android:id="@+id/idCarnet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="ID  del carnet :"
         android:textColor="#101010"
         android:textSize="18sp"
@@ -154,43 +130,18 @@
         app:layout_constraintTop_toBottomOf="@+id/estado" />
 
     <EditText
-        android:id="@+id/textBat"
+        android:id="@+id/editTextBat"
         android:layout_width="106dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="96dp"
         android:hint="Bateria"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textCol"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textCol"
-        app:layout_constraintTop_toBottomOf="@+id/textCol" />
-
-    <EditText
-        android:id="@+id/textsEtado"
-        android:layout_width="106dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:hint="Estado"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textBat"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textBat"
-        app:layout_constraintTop_toBottomOf="@+id/textBat" />
-
-    <EditText
-        android:id="@+id/textIdCarnet"
-        android:layout_width="106dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="ID "
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textsEtado"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textsEtado"
-        app:layout_constraintTop_toBottomOf="@+id/textsEtado" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/bateria"
+        app:layout_constraintStart_toEndOf="@+id/bateria"
+        app:layout_constraintTop_toTopOf="@+id/bateria"
+        app:layout_constraintVertical_bias="0.476" />
 
     <Button
         android:id="@+id/editar"
@@ -203,8 +154,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textIdCarnet"
-        app:layout_constraintVertical_bias="0.356" />
+        app:layout_constraintTop_toBottomOf="@+id/fecha"
+        app:layout_constraintVertical_bias="0.273" />
 
     <TextView
         android:id="@+id/detalles"
@@ -221,7 +172,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -229,4 +180,150 @@
         app:layout_constraintStart_toStartOf="@+id/detalles"
         app:layout_constraintTop_toBottomOf="@+id/detalles"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/textMatricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:text="TextView"
+        android:textColor="#151515"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mat"
+        app:layout_constraintStart_toEndOf="@+id/mat"
+        app:layout_constraintTop_toTopOf="@+id/mat"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textPrecioHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ph"
+        app:layout_constraintStart_toEndOf="@+id/ph"
+        app:layout_constraintTop_toTopOf="@+id/ph" />
+
+    <TextView
+        android:id="@+id/textMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/marc"
+        app:layout_constraintStart_toEndOf="@+id/marc"
+        app:layout_constraintTop_toTopOf="@+id/marc"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/col"
+        app:layout_constraintStart_toEndOf="@+id/col"
+        app:layout_constraintTop_toTopOf="@+id/col"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textBateria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bateria"
+        app:layout_constraintStart_toEndOf="@+id/bateria"
+        app:layout_constraintTop_toTopOf="@+id/bateria"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/estado"
+        app:layout_constraintStart_toEndOf="@+id/estado"
+        app:layout_constraintTop_toTopOf="@+id/estado"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/idCarnet"
+        app:layout_constraintStart_toEndOf="@+id/idCarnet"
+        app:layout_constraintTop_toTopOf="@+id/idCarnet"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Fecha : "
+        android:textColor="#101010"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/idCarnet"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/idCarnet"
+        app:layout_constraintTop_toBottomOf="@+id/idCarnet" />
+
+    <TextView
+        android:id="@+id/textFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="TextView"
+        android:textColor="#101010"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fecha"
+        app:layout_constraintStart_toEndOf="@+id/fecha"
+        app:layout_constraintTop_toTopOf="@+id/fecha"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/editTextFecha"
+        android:layout_width="106dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:ems="10"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/fecha"
+        app:layout_constraintStart_toEndOf="@+id/fecha"
+        app:layout_constraintTop_toTopOf="@+id/fecha"
+        app:layout_constraintVertical_bias="0.476" />
+
+    <Button
+        android:id="@+id/updateokbtn"
+        android:layout_width="59dp"
+        android:layout_height="43dp"
+        android:backgroundTint="#B9B7EC"
+        android:text="OK"
+        android:visibility="gone"
+        app:cornerRadius="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editar"
+        app:layout_constraintStart_toStartOf="@+id/editar"
+        app:layout_constraintTop_toBottomOf="@+id/editar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,7 @@ public class Connector {
         return connector;
     }
 
-    public <T> List<T> getAsList(Class<T> clazz, String path) {
+    public <T> List<T> getList(Class<T> clazz, String path) {
         String url = API.Routes.URL + path;
         String jsonResponse = callMethodsObject.get(url);
         if (jsonResponse != null)
@@ -36,26 +36,14 @@ public class Connector {
         return null;
     }
 
-    public <T> T get(Class<T> clazz, String path) {
-
-        String url = API.Routes.URL + path;
-        String jsonResponse = callMethodsObject.get(url);
-        if (jsonResponse != null)
-            return conversor.fromJson(jsonResponse, clazz);
-        return null;
-    }
-
-    public <T> Result<T> getResult(Class<T> clazz, String path) {
-
+    public <T> Result<T> get(Class<T> clazz, String path) {
         try {
             String url = API.Routes.URL + path;
             Response<ResponseBody> jsonResponse = callMethodsObject.getResult(url);
-
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
             else if (jsonResponse != null)
                 return conversor.getError(jsonResponse.errorBody().string());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,22 +119,5 @@ public class Connector {
         return null;
     }
 
-    public <T> Result<T> authenticate(Class<T> clazz, AuthenticatonData data, String path) {
-        try {
-            String url = API.Routes.URL + path;
-            String jsonObject = conversor.toJson(data);
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-            Response<ResponseBody> jsonResponse = callMethodsObject.putResult(url, body);
-
-            if (jsonResponse != null && jsonResponse.code() == 200)
-                return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
-            else if (jsonResponse != null)
-                return conversor.getError(jsonResponse.errorBody().string());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }

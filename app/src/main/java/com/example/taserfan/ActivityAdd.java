@@ -1,256 +1,227 @@
 package com.example.taserfan;
 
-import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
 import com.example.taserfan.API.Result;
+import com.example.taserfan.Clases.Bicicleta;
+import com.example.taserfan.Clases.Coche;
 import com.example.taserfan.Clases.Color;
 import com.example.taserfan.Clases.Estado;
+import com.example.taserfan.Clases.Moto;
+import com.example.taserfan.Clases.Patinete;
 import com.example.taserfan.Clases.TipoVehiculo;
-import com.example.taserfan.Clases.Vehiculo;
-import com.example.taserfan.Preferencias.GestionPreferencias;
 import com.example.taserfan.Preferencias.PreferenciasActivity;
 import com.example.taserfan.Preferencias.ThemeSetup;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.util.Calendar;
 
-public class ActivityAdd extends BaseActivity implements CallInterface, Serializable {
+public class ActivityAdd extends BaseActivity implements AdapterView.OnItemSelectedListener, CallInterface {
 
-    EditText matri, marc,precio, bateria, idCarnet,color,estado;
-    List<Vehiculo> aux;
-    Vehiculo v;
-    TipoVehiculo tipoVehiculo;
+    EditText matricula,precio, marca,descripcion,bateria,fecha, idCarnet, numPuertas, numPlazas, velmax, cilindrada,tipo, numRuedas, tamanyo;
     Button anyadir;
+    Spinner sTipo, sColor,sEstado;
+    ConstraintLayout layouCoche, layoutMoto,layoutBicicleta,layoutPatinete;
+
+    ArrayAdapter<String> tipoV,colorV,estadoV;
+    String[] tipoVehiculo = {"COCHE", "MOTO", "BICICLETA", "PATINETE"};
+    String[] colorVehiculo = {"rojo", "amarillo", "verde", "azul", "blanco", "negro"};
+    String[] estadoVehiculo = {"baja", "taller", "preparado", "reservado", "alquilado"};
+
+    Context context;
+    Coche coche;
+    Moto moto;
+    Bicicleta bicicleta;
+    Patinete patinete;
+    Color col;
+    Estado est;
     Result result;
-    private final String url = API.Routes.URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        matri = findViewById(R.id.editTextMatricula);
+        context = this;
+
+        matricula = findViewById(R.id.editTextMatricula);
         precio = findViewById(R.id.editTextPrecioH);
-        color = findViewById(R.id.editTextColor);
-        marc = findViewById(R.id.editTextMarca);
+        marca = findViewById(R.id.editTextMarca);
+        descripcion = findViewById(R.id.editTextDescripcion);
         bateria = findViewById(R.id.editTextBateria);
-        estado = findViewById(R.id.editTextEstado);
+        fecha = findViewById(R.id.editTextFech);
         idCarnet = findViewById(R.id.editTextId);
+
+        numPuertas = findViewById(R.id.eTextNumPuertas);
+        numPlazas = findViewById(R.id.eTextNumPlazas);
+        velmax = findViewById(R.id.eTextVelMax);
+        cilindrada = findViewById(R.id.eTextCilindrada);
+        tipo = findViewById(R.id.eTextTipo);
+        numRuedas = findViewById(R.id.eTextNumRuedas);
+        tamanyo = findViewById(R.id.eTextTamanyo);
+
+        layouCoche = findViewById(R.id.layoutCoche);
+        layoutMoto = findViewById(R.id.layoutMoto);
+        layoutBicicleta = findViewById(R.id.layoutBicicleta);
+        layoutPatinete = findViewById(R.id.layoutPatinete);
+
         anyadir = findViewById(R.id.buttonAnyadir);
+        anyadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!matricula.getText().toString().isEmpty() && !marca.getText().toString().isEmpty() && !bateria.getText().toString().isEmpty()){
+                    switch (sColor.getSelectedItem().toString()){
+                        case "rojo":
+                            col = Color.ROJO;
+                            break;
+                        case "amarillo":
+                            col = Color.AMARILLO;
+                            break;
+                        case "verde":
+                            col = Color.VERDE;
+                            break;
+                        case "azul":
+                            col = Color.AZUL;
+                            break;
+                        case "blanco":
+                            col = Color.BLANCO;
+                            break;
+                        case "negro":
+                            col = Color.NEGRO;
+                            break;
+                    }
 
+                    switch (sEstado.getSelectedItem().toString()){
+                        case "baja":
+                            est = Estado.BAJA;
+                            break;
+                        case "taller":
+                            est = Estado.TALLER;
+                            break;
+                        case "preparado":
+                            est = Estado.PREPARADO;
+                            break;
+                        case "reservado":
+                            est = Estado.RESERVADO;
+                            break;
+                        case "alquilado":
+                            est = Estado.ALQUILADO;
+                            break;
+                    }
+
+                    switch (sTipo.getSelectedItem().toString()){
+                        case "COCHE":
+                            if (!numPuertas.getText().toString().isEmpty() && !numPlazas.getText().toString().isEmpty()) {
+                                coche = new Coche(matricula.getText().toString(), Integer.parseInt(precio.getText().toString()), marca.getText().toString(), descripcion.getText().toString(), col, Integer.parseInt(bateria.getText().toString()),new Date(Calendar.getInstance().getTime().getTime()), est,Integer.parseInt(idCarnet.getText().toString()),TipoVehiculo.COCHE, Integer.parseInt(numPuertas.getText().toString()), Integer.parseInt(numPlazas.getText().toString()));
+                                executeCall(ActivityAdd.this);
+                            }
+                            break;
+                        case "MOTO":
+                            if (!velmax.getText().toString().isEmpty() && !cilindrada.getText().toString().isEmpty()) {
+                                moto = new Moto(matricula.getText().toString(), Integer.parseInt(precio.getText().toString()), marca.getText().toString(), descripcion.getText().toString(), col, Integer.parseInt(bateria.getText().toString()),new Date(Calendar.getInstance().getTime().getTime()), est,Integer.parseInt(idCarnet.getText().toString()),TipoVehiculo.COCHE,
+                                        Integer.parseInt(velmax.getText().toString()), Integer.parseInt(cilindrada.getText().toString()));
+                                executeCall(ActivityAdd.this);
+                            }
+                            break;
+                        case "BICICLETA":
+                            if (!tipo.getText().toString().isEmpty()) {
+                                bicicleta = new Bicicleta(matricula.getText().toString(), Integer.parseInt(precio.getText().toString()), marca.getText().toString(),
+                                        descripcion.getText().toString(), col, Integer.parseInt(bateria.getText().toString()),
+                                        new Date(Calendar.getInstance().getTime().getTime()), est,Integer.parseInt(idCarnet.getText().toString()),
+                                        TipoVehiculo.COCHE, tipo.getText().toString());
+                                executeCall(ActivityAdd.this);
+                            }
+                            break;
+                        case "PATINETE":
+                            if (!numRuedas.getText().toString().isEmpty()) {
+                                patinete = new Patinete(matricula.getText().toString(), Integer.parseInt(precio.getText().toString()), marca.getText().toString(),
+                                        descripcion.getText().toString(), col, Integer.parseInt(bateria.getText().toString()),
+                                        new Date(Calendar.getInstance().getTime().getTime()), est,Integer.parseInt(idCarnet.getText().toString()),TipoVehiculo.COCHE,
+                                        Integer.parseInt(numRuedas.getText().toString()), Integer.parseInt(tamanyo.getText().toString()));
+                                executeCall(ActivityAdd.this);
+                            }
+                            break;
+                        default:
+                            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(ActivityAdd.this);
+                            builder.setMessage("Tipo de vehiculo no valido")
+                                    .setTitle("Error")
+                                    .setPositiveButton("Ok", null);
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                    }
+                }
+            }
+        });
+
+
+        sTipo = findViewById(R.id.spinnerTipoVehiculo);
+        sTipo.setOnItemSelectedListener(this);
+        sColor = findViewById(R.id.spinnerColor);
+        sEstado = findViewById(R.id.spinnerEstado);
+
+        tipoV = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tipoVehiculo);
+        tipoV.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        colorV = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colorVehiculo);
+        colorV.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        estadoV = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, estadoVehiculo);
+        estadoV.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        sTipo.setAdapter(tipoV);
+        sColor.setAdapter(colorV);
+        sEstado.setAdapter(estadoV);
         ThemeSetup.applyPreferenceTheme(getApplicationContext());
-
-        GestionPreferencias.getInstance().getTheme(getApplicationContext());
-        GestionPreferencias.getInstance().getIp(getApplicationContext());
-        GestionPreferencias.getInstance().getPuerto(getApplicationContext());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        executeCall(this);
-    }
 
     @Override
     public void doInBackground() {
-        aux = new ArrayList<>(Connector.getConector().getAsList(Vehiculo.class, API.Routes.VEHICULOS));
+        if (coche != null)
+            result = Connector.getConector().post(Coche.class, coche, API.Routes.COCHE);
+        else if (moto != null)
+            result = Connector.getConector().post(Moto.class, moto, API.Routes.MOTO);
+        else if (bicicleta != null)
+            result = Connector.getConector().post(Bicicleta.class, bicicleta, API.Routes.BICICLETA);
+        else if (patinete != null)
+            result = Connector.getConector().post(Patinete.class, patinete, API.Routes.PATINETE);
     }
 
     @Override
     public void doInUI() {
-        matri.setText("" + v.getMatricula());
-       /* precio.setText("" + v.getMarca());
-        color.setText("" + v.getPreciohora());
-        marc.setText("" + v.getColor());
-        bateria.setText("" + v.getBateria());
-        estado.setText("" + v.getEstado());
-        idCarnet.setText("" + v.getIdCarnet());*/
-
-        anyadir.setOnClickListener(view -> {
-
-            String matricula,marca,desc,changedBy;
-            int precioh,bat,id;
-            Color col;
-            Estado est;
-            matricula= matri.getText().toString();
-            marca= marc.getText().toString();
-            precioh= Integer.parseInt(precio.getText().toString());
-            desc= " ";
-            col= Color.valueOf(color.getText().toString());
-            bat= Integer.parseInt(bateria.getText().toString());
-            est= Estado.valueOf(estado.getText().toString());
-            id= Integer.parseInt(idCarnet.getText().toString());
-            changedBy=" ";
-
+        if (result instanceof Result.Success) {
             AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
+            builder.setTitle("Vehiculo añadido")
+                    .setPositiveButton("Ok", null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
+            builder.setMessage("No se ha podido añadir el vehiculo")
+                    .setTitle("Error")
+                    .setPositiveButton("Ok", null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
 
-            try {
-                Integer.parseInt(precio.getText().toString());
-            }catch (NumberFormatException nfe){
-                builder.setMessage("Debes introducir un numero en el precio")
-                        .setTitle("Error")
-                        .setPositiveButton("Ok",null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-            try {
-                Integer.parseInt(bateria.getText().toString());
-            }catch (NumberFormatException nfe){
-                builder.setMessage("Debes introducir un numero en la bateria")
-                        .setTitle("Error")
-                        .setPositiveButton("Ok",null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-            if (marca.equals("")) {
-                builder.setMessage("Debes introducir una marca en la marca")
-                        .setTitle("Error")
-                        .setPositiveButton("Ok",null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }else if (idCarnet.equals("")) {
-                builder.setMessage("El campo del ID del coche esta vacio")
-                        .setTitle("Error")
-                        .setPositiveButton("Ok",null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            } else {
-
-                switch (tipoVehiculo) {
-                    case MOTO:
-                        executeCall(new CallInterface() {
-                            Vehiculo v;
-                            @Override
-                            public void doInBackground() {
-                                TipoVehiculo tv=TipoVehiculo.MOTO;
-                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
-                                result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
-                            }
-
-                            @Override
-                            public void doInUI() {
-                                if (result instanceof Result.Success) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setTitle("Actualizado")
-                                            .setPositiveButton("Ok", (dialogInterface, i) -> finish());
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                } else {
-                                    Result.Error error = (Result.Error) result;
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setMessage("Error: "+error.getCode()+ "( "+error.getError()+" )")
-                                            .setTitle("Error")
-                                            .setPositiveButton("Ok",null);
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            }
-                        });
-                        break;
-                    case COCHE:
-                        executeCall(new CallInterface() {
-                            Vehiculo v;
-                            @Override
-                            public void doInBackground() {
-                                TipoVehiculo tv =TipoVehiculo.COCHE;
-                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
-                                result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
-                            }
-
-                            @Override
-                            public void doInUI() {
-                                if (result instanceof Result.Success) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setTitle("Actualizado")
-                                            .setPositiveButton("Ok", (dialogInterface, i) -> finish());
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                } else {
-                                    Result.Error error = (Result.Error) result;
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setMessage("Error "+error.getCode()+ ": "+error.getError())
-                                            .setTitle("Error")
-                                            .setPositiveButton("Ok",null);
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            }
-                        });
-                        break;
-                    case BICICLETA:
-                        executeCall(new CallInterface() {
-                            Vehiculo v;
-                            @Override
-                            public void doInBackground() {
-                                TipoVehiculo tv=TipoVehiculo.BICICLETA;
-                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
-                                result = Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
-                            }
-
-                            @Override
-                            public void doInUI() {
-                                if (result instanceof Result.Success) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setTitle("Actualizado")
-                                            .setPositiveButton("Ok", (dialogInterface, i) -> finish());
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                } else {
-                                    Result.Error error = (Result.Error) result;
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setMessage("Error "+error.getCode()+ ": "+error.getError())
-                                            .setTitle("Error")
-                                            .setPositiveButton("Ok",null);
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            }
-                        });
-                        break;
-                    case PATINETE:
-                        executeCall(new CallInterface() {
-                            Vehiculo v;
-                            @Override
-                            public void doInBackground() {
-                                TipoVehiculo tv=TipoVehiculo.PATINETE;
-                               // v = new Vehiculo(matricula, precioh, marca, desc, col, bat, est, id,changedBy,tv);
-                                result= Connector.getConector().post(Vehiculo.class, v, url + API.Routes.VEHICULO);
-                            }
-
-                            @Override
-                            public void doInUI() {
-                                if (result instanceof Result.Success) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setTitle("Actualizado")
-                                            .setPositiveButton("Ok", (dialogInterface, i) -> finish());
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                } else {
-                                    Result.Error error = (Result.Error) result;
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAdd.this);
-                                    builder.setMessage("Error "+error.getCode()+ ": "+error.getError())
-                                            .setTitle("Error")
-                                            .setPositiveButton("Ok",null);
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            }
-                        });
-                        break;
-                }
-            }
-        });
+        Intent intent = new Intent(ActivityAdd.this, MainActivity.class);
+        startActivity(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -271,4 +242,92 @@ public class ActivityAdd extends BaseActivity implements CallInterface, Serializ
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String selected =adapterView.getSelectedItem().toString();
+        switch (selected){
+            case "COCHE":
+                layouCoche.setVisibility(View.VISIBLE);
+                layoutMoto.setVisibility(View.GONE);
+                layoutBicicleta.setVisibility(View.GONE);
+                layoutPatinete.setVisibility(View.GONE);
+                break;
+            case "MOTO":
+                layouCoche.setVisibility(View.GONE);
+                layoutMoto.setVisibility(View.VISIBLE);
+                layoutBicicleta.setVisibility(View.GONE);
+                layoutPatinete.setVisibility(View.GONE);
+                break;
+            case "BICICLETA":
+                layouCoche.setVisibility(View.GONE);
+                layoutMoto.setVisibility(View.GONE);
+                layoutBicicleta.setVisibility(View.VISIBLE);
+                layoutPatinete.setVisibility(View.GONE);
+                break;
+            case "PATINETE":
+                layouCoche.setVisibility(View.GONE);
+                layoutMoto.setVisibility(View.GONE);
+                layoutBicicleta.setVisibility(View.GONE);
+                layoutPatinete.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("matricula", matricula.getText().toString());
+        outState.putString("precio", precio.getText().toString());
+        outState.putString("marca", marca.getText().toString());
+        outState.putString("descripcion", descripcion.getText().toString());
+        outState.putInt("sColor", sColor.getSelectedItemPosition());
+        outState.putString("bateria", bateria.getText().toString());
+        outState.putInt("sEstado", sEstado.getSelectedItemPosition());
+        outState.putString("idCarnet", idCarnet.getText().toString());
+        outState.putInt("sTipo", sTipo.getSelectedItemPosition());
+
+        outState.putString("numPuertas", numPuertas.getText().toString());
+        outState.putString("numPlazas", numPlazas.getText().toString());
+
+        outState.putString("velocidadMax", velmax.getText().toString());
+        outState.putString("cilindrada", cilindrada.getText().toString());
+
+        outState.putString("tipo", tipo.getText().toString());
+
+        outState.putString("numRuedas", numRuedas.getText().toString());
+        outState.putString("tamanyo", tamanyo.getText().toString());
+
+    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        matricula.setText(savedInstanceState.getString("matricula"));
+        precio.setText(savedInstanceState.getString("precio"));
+        marca.setText(savedInstanceState.getString("marca"));
+        descripcion.setText(savedInstanceState.getString("descripcion"));
+        sColor.setSelection(savedInstanceState.getInt("sColor"));
+        bateria.setText(savedInstanceState.getString("bateria"));
+        sEstado.setSelection(savedInstanceState.getInt("sEstado"));
+        idCarnet.setText(savedInstanceState.getString("idCarnet"));
+        sTipo.setSelection(savedInstanceState.getInt("sTipo"));
+
+        numPlazas.setText(savedInstanceState.getString("numPuertas"));
+        numPuertas.setText(savedInstanceState.getString("numPlazas"));
+
+        velmax.setText(savedInstanceState.getString("velocidadMax"));
+        cilindrada.setText(savedInstanceState.getString("cilindrada"));
+
+        tipo.setText(savedInstanceState.getString("tipo"));
+
+        numRuedas.setText(savedInstanceState.getString("numRuedas"));
+        tamanyo.setText(savedInstanceState.getString("tamanyo"));
+    }
+
 }
